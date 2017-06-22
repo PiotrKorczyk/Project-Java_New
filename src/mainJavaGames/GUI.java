@@ -1,14 +1,21 @@
 package mainJavaGames;
 
 
-import javax.swing.JFrame;
-
-public class GUI extends JFrame{
+import game.GamePanel;
 
 
-    public static void main(String args[]){
-        
+import java.awt.EventQueue;
+import java.io.IOException;
+
+//g??wna klasa
+public class GUI {
+    public static void main(String[] args) throws IOException{
+        EventQueue.invokeLater(new Runnable(){
+            public void run(){
+
+                new GameClass(null, null, 5, 0);
+            }
+        });
+
     }
-
 }
-
