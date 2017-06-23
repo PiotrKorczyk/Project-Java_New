@@ -1,5 +1,9 @@
 package GameView;
 
+import DecorateTheView.InterfaceView;
+import DecorateTheView.RockPaperScissorDecorator;
+import DecorateTheView.TicTacToeDecorator;
+
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridLayout;
@@ -10,19 +14,14 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-//import DecorateTheView.HareAndDeerDecorator;
-//import DecorateTheView.HeadsAndTailsDecorator;
-//import DecorateTheView.InterfaceView;
-//import DecorateTheView.RockPaperScissorDecorator;
-//import DecorateTheView.TicTacToeDecorator;
 
-public class View  extends JFrame {
+public class View  extends JFrame  implements InterfaceView{
     /**
      *
      */
     private static final long serialVersionUID = 1L;
     public static final int HEIGHT = 600;
-    public static final int WIDTH = 1000;
+    public static final int WIDTH = 400;
 
     public JButton [] gamesButtons;
     public JButton NewGame;
@@ -36,7 +35,7 @@ public class View  extends JFrame {
 
     protected String [] podpisyGamesButtons;
 
-
+    InterfaceView dekorowanyWidok = null;
     protected JLabel lblLed[] = {new JLabel("�"), new JLabel("�")};
     protected JLabel[] printScore = {new JLabel("Score"), new JLabel("Score")};
 
@@ -47,66 +46,61 @@ public class View  extends JFrame {
 
     protected Color colors[] = { new Color(50,205,0), new Color(255,255,0)};
 
-//    public StrategyGamesView strategyView = null;
-//    public View(int gra){
-//
-//        setLayout(null);
-//        setPreferredSize(new Dimension(2000,HEIGHT));
-//
-//        gamesButtonsPanel = new JPanel();
-//        NewGame = new JButton("New Game");
-//        namesButtons = new JButton[2];
-//        printRound = new JLabel("Round: " + 1);
-//
-//        panelOptions = new JPanel();
-//        panelOptions.setBorder(BorderFactory.createTitledBorder(""));
-//
-//
-// /*1*/  panelOptions.setBounds(20,10,170,80);
-//
-//        panelOptions.add(NewGame);
-//        panelOptions.add(printRound);
-//
-//        //panelOptions.setLayout(new FlowLayout());
-////		panelOptions.setPreferredSize(new Dimension(100,80));
-//        panelOptions.setOpaque(false);
-//
-//
-//        add(panelOptions);
-//
-//        gamesButtonsPanel.setLayout(new GridLayout(3,3));
-//        gamesButtonsPanel.setPreferredSize(new Dimension(WIDTH, HEIGHT));
-// /*2*/  gamesButtonsPanel.setBounds(40,230,300,300);
-//
-//
-//
-//        timePanel.setBorder(BorderFactory.createTitledBorder("Time:"));
-//        timePanel.setPreferredSize(new Dimension(100,50));
-//        timePanel.add(countDownlabel);
-// /*3*/  timePanel.setBounds(190,10,170,80);
-//
-//        add(timePanel);
-//
-////		switch(gra){
-////			case 0: strategyView = new TicTacToeView(gamesButtons, podpisyGamesButtons, gamesButtonsPanel);	break;
-////			case 1: strategyView = new HeadsAndTailsView(gamesButtons, podpisyGamesButtons, gamesButtonsPanel);	break;
-////			case 2: strategyView = new RockPaperAndScissorsView(gamesButtons, podpisyGamesButtons, gamesButtonsPanel); break;
-////			case 3: strategyView = new HareAndDeerView(gamesButtons, podpisyGamesButtons, gamesButtonsPanel); break;
-////		}
-////
-////		switch(gra){
-////			case 0: dekorowanyWidok = new TicTacToeDecorator(this); break;
-////			case 1: dekorowanyWidok = new HeadsAndTailsDecorator(this); break;
-////			case 2: dekorowanyWidok = new RockPaperScissorDecorator(this); break;
-////			case 3: dekorowanyWidok = new HareAndDeerDecorator(this); break;
-////		}
-////		add(dekorowanyWidok.setTheGameBackground(WIDTH,HEIGHT));
-//
-//        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-//        pack();
-//        setLocationRelativeTo(null);
-//        setVisible(true);
-//    }
+    public StrategyGamesView strategyView = null;
+    public View(int gra){
+
+        setLayout(null);
+        setPreferredSize(new Dimension(WIDTH,HEIGHT));
+
+        gamesButtonsPanel = new JPanel();
+        NewGame = new JButton("New Game");
+        namesButtons = new JButton[2];
+        printRound = new JLabel("Round: " + 1);
+
+        panelOptions = new JPanel();
+        panelOptions.setBorder(BorderFactory.createTitledBorder(""));
+
+
+ /*1*/  panelOptions.setBounds(20,10,170,80);
+
+        panelOptions.add(NewGame);
+        panelOptions.add(printRound);
+
+        //panelOptions.setLayout(new FlowLayout());
+//		panelOptions.setPreferredSize(new Dimension(100,80));
+        panelOptions.setOpaque(false);
+
+
+        add(panelOptions);
+
+        gamesButtonsPanel.setLayout(new GridLayout(3,3));
+        gamesButtonsPanel.setPreferredSize(new Dimension(WIDTH, HEIGHT));
+ /*2*/  gamesButtonsPanel.setBounds(40,230,300,300);
+
+
+
+        timePanel.setBorder(BorderFactory.createTitledBorder("Time:"));
+        timePanel.setPreferredSize(new Dimension(100,50));
+        timePanel.add(countDownlabel);
+ /*3*/  timePanel.setBounds(190,10,170,80);
+
+        add(timePanel);
+
+		switch(gra){
+			case 0: strategyView = new TicTacToeView(gamesButtons, podpisyGamesButtons, gamesButtonsPanel);
+                dekorowanyWidok = new TicTacToeDecorator(this); break;
+			case 1: strategyView = new RockPaperAndScissorsView(gamesButtons, podpisyGamesButtons, gamesButtonsPanel);
+                dekorowanyWidok = new RockPaperScissorDecorator(this); break;
+
+		}
+
+		add(dekorowanyWidok.setTheGameBackground(WIDTH,HEIGHT));
+
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        pack();
+        setLocationRelativeTo(null);
+        setVisible(true);
+    }
 
     public void setPlayersInfo(String []names, int score1, int score2){
         printScore(score1,score2);
@@ -124,15 +118,15 @@ public class View  extends JFrame {
         }
     }
 
-//    //schermetyzowac
-//    public void setGamesButtons(){
-//        gamesButtons = new JButton[strategyView.ReturnNumberOfButtons()];
-//        for(int i=0;i<strategyView.ReturnNumberOfButtons();i++){
-//            gamesButtons[i] = new JButton(strategyView.ReturnSignaturesOfButtons(i));
-//            gamesButtonsPanel.add(gamesButtons[i]);
-//        }
-//        add(gamesButtonsPanel);
-//    }
+    //schermetyzowac
+    public void setGamesButtons(){
+        gamesButtons = new JButton[strategyView.ReturnNumberOfButtons()];
+        for(int i=0;i<strategyView.ReturnNumberOfButtons();i++){
+            gamesButtons[i] = new JButton(strategyView.ReturnSignaturesOfButtons(i));
+            gamesButtonsPanel.add(gamesButtons[i]);
+        }
+        add(gamesButtonsPanel);
+    }
 
     private void setPlayersOnButtons(String []names){
         for(int i = 0; i < 2; i++)
